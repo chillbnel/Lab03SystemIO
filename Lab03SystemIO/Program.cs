@@ -9,25 +9,64 @@ namespace Lab03SystemIO
         static void Main(string[] args)
         {
             string path = "../../../myfile.txt";
+
             CreateFile(path);
-            AppendToFile(path);
+            MainMenu(path);
+            //ReadFile(path);
         }
 
-        static string MainMenu()
+        static void MainMenu(string path)
         {
             string userEntry;
 
             Console.WriteLine("Welcome the Guessing Game, Please select from the following:\n" +
                 "MAIN MENU\n" +
-                "1. Play!" +
-                "2. Add a new word" +
-                "3. See all words" +
+                "1. Play!\n" +
+                "2. Add a new word\n" +
+                "3. Remove a word\n" +
                 "4. Exit\n" +
                 "Enter 1, 2, 3, or 4 to continue");
 
             userEntry = Console.ReadLine();
 
-            return userSelect;
+            MenuSelect(userEntry, path);
+        }
+
+        static void MenuSelect(string userEntry, string path)
+        {
+            int userEntryInt = 0;
+
+            if (int.TryParse(userEntry, out userEntryInt))
+            {
+                switch (userEntryInt)
+                {
+                    case 1:
+                        Console.Clear();
+                        break;
+
+                    case 2:
+                        Console.Clear();
+                        Console.WriteLine("Please enter a new word: ");
+                        string newWord = Console.ReadLine();
+                        AppendToFile(path, newWord);
+                        break;
+
+                    case 3:
+                        Console.Clear();
+                        ReadFile(path);
+                        Console.WriteLine("Please enter the # of the word you would like to remove: ");
+                        string removeWord = Console.ReadLine();
+                        DeleteLineFromFile(path, removeWord);
+                        Console.ReadLine();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            Console.Clear();
+            MainMenu(path);
         }
 
         static void CreateFile(string path)
@@ -36,7 +75,7 @@ namespace Lab03SystemIO
             {
                 using (FileStream fs = File.Create(path))
                 {
-                    Byte[] myWords = new UTF8Encoding(true).GetBytes("Hello Brian!");
+                    Byte[] myWords = new UTF8Encoding(true).GetBytes("Brian\nMicrosoft\ncodefellows");
                     fs.Write(myWords, 0, myWords.Length);
                 }
             }
@@ -51,6 +90,12 @@ namespace Lab03SystemIO
             try
             {
                 string[] myWords = File.ReadAllLines(path);
+
+                for (int i = 0; i < myWords.Length; i++)
+                {
+                    Console.WriteLine((i + 1) + ". " + myWords[i]);
+                }
+
                 return myWords;
             }
             catch (Exception)
@@ -59,35 +104,38 @@ namespace Lab03SystemIO
             }
         }
 
-        static void AppendToFile(string path)
+        static void AppendToFile(string path, string newWord)
         {
-            try
+            using (StreamWriter sw = File.AppendText(path))
             {
-                using (StreamWriter sw = File.AppendText(path))
+                try
                 {
-                    for (int i = 1; i < 6; i++)
-                    {
-                        sw.WriteLine(i);
-                    }
+
+                    sw.WriteLine("\n" + newWord);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    sw.Close();
                 }
             }
-            catch (Exception)
-            {
-                throw;
-            }
+            ReadFile(path);
         }
 
         static void DeleteLineFromFile(string path, string lineToRemove)
         {
-            string[] currentWords = ReadFile(path);
-            string[] newWords = new string[currentWords.Length - 1];
-            for (int i = 0; i <currentWords.Length; i++)
-            {
-                if (lineToRemove == currentWords[i])
-                {
+            string[] myWords = File.ReadAllLines(path);
 
-                }
+            int lineToRemoveInt = 0;
+
+            if (int.TryParse(lineToRemove, out lineToRemoveInt))
+            {
+               Console.WriteLine(myWords[lineToRemoveInt - 1]);
             }
+
         }
             
             
