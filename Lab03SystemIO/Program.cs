@@ -12,9 +12,12 @@ namespace Lab03SystemIO
 
             CreateFile(path);
             MainMenu(path);
-            //ReadFile(path);
         }
 
+        /// <summary>
+        /// Method used to display the game's main menu
+        /// </summary>
+        /// <param name="path">path to word file</param>
         static void MainMenu(string path)
         {
             string userEntry;
@@ -32,6 +35,11 @@ namespace Lab03SystemIO
             MenuSelect(userEntry, path);
         }
 
+        /// <summary>
+        /// Method used to take the user's menu input and call corresponding method
+        /// </summary>
+        /// <param name="userEntry">Menu item selected</param>
+        /// <param name="path">path to word file</param>
         static void MenuSelect(string userEntry, string path)
         {
             int userEntryInt = 0;
@@ -42,6 +50,7 @@ namespace Lab03SystemIO
                 {
                     case 1:
                         Console.Clear();
+                        Game(path);
                         break;
 
                     case 2:
@@ -69,6 +78,10 @@ namespace Lab03SystemIO
             MainMenu(path);
         }
 
+        /// <summary>
+        /// Method creates the file that stores words to guess
+        /// </summary>
+        /// <param name="path">path to word file</param>
         static void CreateFile(string path)
         {
             try
@@ -85,6 +98,27 @@ namespace Lab03SystemIO
             }
         }
 
+        /// <summary>
+        /// Method execute's the game code
+        /// </summary>
+        /// <param name="path">path to word file</param>
+        static void Game(string path)
+        {
+            string[] myWords = File.ReadAllLines(path);
+
+            
+            for (int i = 0; i < myWords[1].Length; i++)
+            {
+                Console.Write("_ ");
+            }
+            Console.ReadLine();
+        }
+
+        /// <summary>
+        /// Reads all lines in the words file
+        /// </summary>
+        /// <param name="path">path to word file</param>
+        /// <returns>all words stored in file</returns>
         static string[] ReadFile(string path)
         {
             try
@@ -104,6 +138,11 @@ namespace Lab03SystemIO
             }
         }
 
+        /// <summary>
+        /// Method adds a word to the file
+        /// </summary>
+        /// <param name="path">path to word file</param>
+        /// <param name="newWord">word to be added</param>
         static void AppendToFile(string path, string newWord)
         {
             using (StreamWriter sw = File.AppendText(path))
@@ -125,6 +164,11 @@ namespace Lab03SystemIO
             ReadFile(path);
         }
 
+        /// <summary>
+        /// Method deletes word from the file
+        /// </summary>
+        /// <param name="path">path to word file</param>
+        /// <param name="lineToRemove">index of word to be removed</param>
         static void DeleteLineFromFile(string path, string lineToRemove)
         {
             string[] myWords = File.ReadAllLines(path);
@@ -133,12 +177,9 @@ namespace Lab03SystemIO
 
             if (int.TryParse(lineToRemove, out lineToRemoveInt))
             {
-               Console.WriteLine(myWords[lineToRemoveInt - 1]);
+               Console.WriteLine(myWords[lineToRemoveInt - 1]);//ran out of time
             }
 
         }
-            
-            
-
     }
 }
