@@ -63,7 +63,7 @@ namespace Lab03SystemIO
                     case 3:
                         Console.Clear();
                         ReadFile(path);
-                        Console.WriteLine("Please enter the # of the word you would like to remove: ");
+                        Console.WriteLine("Please enter the word you would like to remove: ");
                         string removeWord = Console.ReadLine();
                         DeleteLineFromFile(path, removeWord);
                         Console.ReadLine();
@@ -88,7 +88,7 @@ namespace Lab03SystemIO
             {
                 using (FileStream fs = File.Create(path))
                 {
-                    Byte[] myWords = new UTF8Encoding(true).GetBytes("Brian\nMicrosoft\ncodefellows");
+                    Byte[] myWords = new UTF8Encoding(true).GetBytes("Brian\nMicrosoft\ncodefellows\n");
                     fs.Write(myWords, 0, myWords.Length);
                 }
             }
@@ -143,14 +143,15 @@ namespace Lab03SystemIO
         /// </summary>
         /// <param name="path">path to word file</param>
         /// <param name="newWord">word to be added</param>
-        static void AppendToFile(string path, string newWord)
+        public static bool AppendToFile(string path, string newWord)
         {
             using (StreamWriter sw = File.AppendText(path))
             {
                 try
                 {
 
-                    sw.WriteLine("\n" + newWord);
+                    sw.WriteLine(newWord);
+                    return true;
                 }
                 catch (Exception)
                 {
@@ -161,7 +162,6 @@ namespace Lab03SystemIO
                     sw.Close();
                 }
             }
-            ReadFile(path);
         }
 
         /// <summary>
@@ -173,13 +173,13 @@ namespace Lab03SystemIO
         {
             string[] myWords = File.ReadAllLines(path);
 
-            int lineToRemoveInt = 0;
-
-            if (int.TryParse(lineToRemove, out lineToRemoveInt))
+            for (int i = 0; i < myWords.Length; i++)
             {
-               Console.WriteLine(myWords[lineToRemoveInt - 1]);//ran out of time
+                if(!myWords[i].Contains(lineToRemove))
+                {
+                    AppendToFile(path, myWords[i]);
+                }
             }
-
         }
     }
 }
