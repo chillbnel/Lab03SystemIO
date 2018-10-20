@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 using Lab03SystemIO;
-using static Lab03SystemIO.program;
+using static Lab03SystemIO.Program;
 
 namespace SystemIOTest
 {

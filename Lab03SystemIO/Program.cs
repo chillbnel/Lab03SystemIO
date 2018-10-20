@@ -172,14 +172,22 @@ namespace Lab03SystemIO
         static void DeleteLineFromFile(string path, string lineToRemove)
         {
             string[] myWords = File.ReadAllLines(path);
+            string[] newMyWords = new string[myWords.Length - 1];
+            int index = 0;
 
             for (int i = 0; i < myWords.Length; i++)
             {
-                if(!myWords[i].Contains(lineToRemove))
+                if(lineToRemove == myWords[i])
                 {
-                    AppendToFile(path, myWords[i]);
+                    continue;
+                }
+                else
+                {
+                    newMyWords[index] = myWords[i];
+                    index++;
                 }
             }
+            File.WriteAllLines(path, newMyWords);
         }
     }
 }
