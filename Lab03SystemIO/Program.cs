@@ -27,8 +27,9 @@ namespace Lab03SystemIO
                 "1. Play!\n" +
                 "2. Add a new word\n" +
                 "3. Remove a word\n" +
-                "4. Exit\n" +
-                "Enter 1, 2, 3, or 4 to continue");
+                "4. View all words\n" +
+                "5. Exit\n" +
+                "Enter 1, 2, 3, 4, or 5 to continue");
 
             userEntry = Console.ReadLine();
 
@@ -66,6 +67,13 @@ namespace Lab03SystemIO
                         Console.WriteLine("Please enter the word you would like to remove: ");
                         string removeWord = Console.ReadLine();
                         DeleteLineFromFile(path, removeWord);
+                        Console.ReadLine();
+                        break;
+
+                    case 4:
+                        Console.Clear();
+                        ReadFile(path);
+                        Console.WriteLine("Please hit enter to continue");
                         Console.ReadLine();
                         break;
 
@@ -173,11 +181,13 @@ namespace Lab03SystemIO
         {
             string[] myWords = File.ReadAllLines(path);
             string[] newMyWords = new string[myWords.Length - 1];
+            int lineToRemoveInt;
+            int.TryParse(lineToRemove, out lineToRemoveInt);
             int index = 0;
 
             for (int i = 0; i < myWords.Length; i++)
             {
-                if(lineToRemove == myWords[i])
+                if((lineToRemoveInt- 1) == i)
                 {
                     continue;
                 }
