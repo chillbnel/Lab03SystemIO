@@ -67,7 +67,6 @@ namespace Lab03SystemIO
                         Console.WriteLine("Please enter the word you would like to remove: ");
                         string removeWord = Console.ReadLine();
                         DeleteLineFromFile(path, removeWord);
-                        Console.ReadLine();
                         break;
 
                     case 4:
@@ -90,7 +89,7 @@ namespace Lab03SystemIO
         /// Method creates the file that stores words to guess
         /// </summary>
         /// <param name="path">path to word file</param>
-        static void CreateFile(string path)
+        public static void CreateFile(string path)
         {
             try
             {
@@ -110,7 +109,7 @@ namespace Lab03SystemIO
         /// Method execute's the game code
         /// </summary>
         /// <param name="path">path to word file</param>
-        static void Game(string path)
+        public static void Game(string path)
         {
             string[] myWords = File.ReadAllLines(path);
 
@@ -127,7 +126,7 @@ namespace Lab03SystemIO
         /// </summary>
         /// <param name="path">path to word file</param>
         /// <returns>all words stored in file</returns>
-        static string[] ReadFile(string path)
+        public static string[] ReadFile(string path)
         {
             try
             {
@@ -177,7 +176,7 @@ namespace Lab03SystemIO
         /// </summary>
         /// <param name="path">path to word file</param>
         /// <param name="lineToRemove">index of word to be removed</param>
-        static void DeleteLineFromFile(string path, string lineToRemove)
+        public static void DeleteLineFromFile(string path, string lineToRemove)
         {
             string[] myWords = File.ReadAllLines(path);
             string[] newMyWords = new string[myWords.Length - 1];
