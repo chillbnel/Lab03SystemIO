@@ -9,3 +9,6 @@ NOTE: numbers and words are acceptable entries.
 
 ## Version
 1.0.0
+
+## Screen Capture
+![Screen](https://github.com/chillbnel/Lab03SystemIO/blob/master/ScreenShot03.png)
